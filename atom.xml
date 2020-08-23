@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://huang5556019.github.io/</id>
     <title>Gridea</title>
-    <updated>2020-08-23T09:31:31.191Z</updated>
+    <updated>2020-08-23T14:02:15.780Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://huang5556019.github.io/"/>
     <link rel="self" href="https://huang5556019.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://huang5556019.github.io/images/avatar.png</logo>
     <icon>https://huang5556019.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[[日记]20200823]]></title>
+        <id>https://huang5556019.github.io/post/ri-ji-20200823/</id>
+        <link href="https://huang5556019.github.io/post/ri-ji-20200823/">
+        </link>
+        <updated>2020-08-23T13:56:05.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>今天早上和老婆孩子一起去公园运动,好久没有一起运动了,以前都是单独行动,现在想想以后还是坚持周末找半天一起活动.
+
+好久没有运动,感觉身体素质下降很多,以前高强度打2个小时羽毛球都没啥问题,现在才和老婆打一个小时就有点喘;
+
+订个目标: 以后每周打2个小时羽毛球</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[博客免费素材网站]]></title>
         <id>https://huang5556019.github.io/post/bo-ke-mian-fei-su-cai-wang-zhan/</id>
