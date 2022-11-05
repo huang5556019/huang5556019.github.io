@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Archives - AisLing Site
+  About - AisLing Site
   
   </title>
   
@@ -93,122 +93,23 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_archives').addClass('is_active');
-  });
+	$(function(){
+		var currentURL = 'about.html';
+		currentURL = currentURL.substr(0,currentURL.length-5);
+		$('#menu_item_'+currentURL).addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-    <div id="archives-page-wrap">
-        <h1>Archives</h1>
-        <div class="markdown-body archives-wrap">
-          
-             
-                <h1>2022</h1>
-            
-            <div class="article">
-              <a class="clearlink" href="swiftui%20tutorials.html">
-                <h1>swiftui tutorials</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2022/11/05 20:51 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='Blog.html'>Blog</a></span>
-                 
-              </div>
-            </div><!-- article -->
 
-          
-            
-            <div class="article">
-              <a class="clearlink" href="swift%20tutorials.html">
-                <h1>swift tutorials</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2022/11/05 20:13 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='Blog.html'>Blog</a></span>
-                 
-              </div>
-            </div><!-- article -->
+    <div id="single-page-wrap">
+        <h1>About</h1>
 
-           
+        <div class="markdown-body post-page">
+        <p><a href="https://github.com/huang5556019">Github</a></p>
+
         </div>
-      </div>
-  </div>
-
- <div class="large-4 medium-4 columns">
-  <div class="hide-for-small">
-    <div id="sidebar" class="sidebar">
-          <div id="site-info" class="site-info">
-            
-                <h1>AisLing Site</h1>
-                <div class="site-des">write something </div>
-                <div class="social">
-
-
-
-
-
-
-
-
-
-<a target="_blank" class="github" target="_blank" href="https://github.com/huang5556019" title="GitHub">GitHub</a>
-
-  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
-                
-              	 </div>
-          	</div>
-
-             
-
-              <div id="site-categories" class="side-item ">
-                <div class="side-header">
-                  <h2>Categories</h2>
-                </div>
-                <div class="side-content">
-
-      	<p class="cat-list">
-        
-            <a href="Blog.html"><strong>Blog</strong></a>
-         
-        </p>
-
-
-                </div>
-              </div>
-
-              <div id="site-categories" class="side-item">
-                <div class="side-header">
-                  <h2>Recent Posts</h2>
-                </div>
-                <div class="side-content">
-                <ul class="posts-list">
-	      
-		      
-			      <li class="post">
-			        <a href="swiftui%20tutorials.html">swiftui tutorials</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="swift%20tutorials.html">swift tutorials</a>
-			      </li>
-		     
-		   
-		  		</ul>
-                </div>
-              </div>
-        </div><!-- sidebar -->
-      </div><!-- hide for small -->
-</div><!-- large 4 -->
-
-</div><!-- row -->
-
+    </div>
+</div>              
  <div class="page-bottom clearfix">
   <div class="row">
    <p class="copyright">Copyright &copy; 2015
