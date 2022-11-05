@@ -4,7 +4,7 @@
   <title><![CDATA[AisLing Site]]></title>
   <link href="https://huang5556019.github.io/atom.xml" rel="self"/>
   <link href="https://huang5556019.github.io/"/>
-  <updated>2022-11-05T20:47:30+08:00</updated>
+  <updated>2022-11-05T20:51:50+08:00</updated>
   <id>https://huang5556019.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -13,12 +13,21 @@
   <generator uri="http://www.mweb.im/">MWeb</generator>
   
   <entry>
-    <title type="html"><![CDATA[About Author]]></title>
-    <link href="https://huang5556019.github.io/16676520577476.html"/>
-    <updated>2022-11-05T20:40:57+08:00</updated>
-    <id>https://huang5556019.github.io/16676520577476.html</id>
+    <title type="html"><![CDATA[swiftui tutorials]]></title>
+    <link href="https://huang5556019.github.io/16676526670257.html"/>
+    <updated>2022-11-05T20:51:07+08:00</updated>
+    <id>https://huang5556019.github.io/16676526670257.html</id>
     <content type="html"><![CDATA[
-<p><a href="https://github.com/huang5556019">Github</a></p>
+<h2><a id="official-website-entry" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>official website entry</h2>
+<p><a href="https://developer.apple.com/xcode/swiftui/">https://developer.apple.com/xcode/swiftui/</a></p>
+<h3><a id="get-started" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>get started</h3>
+<p><a href="https://developer.apple.com/tutorials/swiftui">https://developer.apple.com/tutorials/swiftui</a></p>
+<h3><a id="documentation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>documentation</h3>
+<p><a href="https://developer.apple.com/documentation/swiftui/">https://developer.apple.com/documentation/swiftui/</a></p>
+<h3><a id="video-tutorials" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>video tutorials</h3>
+<p><a href="https://developer.apple.com/videos/">https://developer.apple.com/videos/</a></p>
+<h3><a id="forums" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>forums</h3>
+<p><a href="https://developer.apple.com/forums/tags/swiftui">https://developer.apple.com/forums/tags/swiftui</a></p>
 
 ]]></content>
   </entry>
