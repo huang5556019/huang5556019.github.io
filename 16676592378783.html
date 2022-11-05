@@ -1,0 +1,662 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>
+    
+  Indie Mac App DevOps With GitHub Actions - AisLing Site
+  
+
+  </title>
+  <meta name="author" content="">
+  <meta name="description" content="write something ">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link href="asset/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="atom.xml" rel="alternate" title="AisLing Site" type="application/atom+xml">
+  <script src="asset/js/modernizr-2.0.js"></script>
+  <script src="asset/js/jquery.min.js"></script>
+  <style type="text/css">
+  .cat-children-p{ padding: 6px 0px;}
+  .hljs{background: none;}
+  </style>
+  <script type="text/javascript">
+  var isAddSildbar = true;
+  </script>
+  <script src="asset/js/octopress.js" type="text/javascript"></script>
+</head>
+<script type="text/javascript">
+//链接新开窗口
+function addBlankTargetForLinks () {
+  $('a[href^="http"]').each(function(){
+      $(this).attr('target', '_blank');
+  });
+}
+$(document).ready(function(event) {
+  addBlankTargetForLinks();
+});
+</script>
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="index.html">AisLing Site</a></h1>
+  
+    <h2>write something </h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:huang5556019.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+
+  <li id=""><a target="_blank" href="index.html">首页</a></li>
+
+  <li id=""><a target="_self" href="archives.html">Archives</a></li>
+
+  <li id=""><a target="_self" href="about.html">关于</a></li>
+
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+<div>
+	<article class="hentry" role="article">
+	<header>
+			  	<h1 class="entry-title">Indie Mac App DevOps With GitHub Actions</h1>
+				<p class="meta"><time datetime="2022-11-05T22:40:37+08:00" pubdate data-updated="true">2022/11/05 22:40 下午</time></p>
+			 </header>
+		  	<div class="entry-content">
+			  	<blockquote>
+<p>记录如何利用GitHub Action自动打包macOS App<br />
+暂未消化</p>
+</blockquote>
+<span id="more"></span><!-- more -->
+<p>Are you thinking about writing an app for <a href="https://www.apple.com/macos/">macOS</a>? Would you like to distribute it outside the <a href="https://developer.apple.com/app-store/mac/">Mac App Store</a> using <a href="https://brew.sh/">Homebrew</a>? In this article, I describe how to use <a href="https://github.com/">GitHub</a> and <a href="https://github.com/features/actions">GitHub Actions</a> to set up continuous integration, delivery, and deployment for a Mac app signed with an Apple <a href="https://developer.apple.com/developer-id/">Developer ID</a>. Best of all, if the app is open source, everything I describe is completely free to use! (If your app isn’t open source but is hosted in a private repository on GitHub, you can still do this for free, subject to <a href="https://help.github.com/en/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions">limits</a>.)</p>
+<h1><a id="why-is-this-hard" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why Is This Hard?</h1>
+<p>It used to be that you could just compile your code, package it in an archive or installer, put it on a site for download, and expect people to download it — not anymore. Thanks to the spread of malware, Apple has added restrictions to the operating system to prevent untrusted code from running. These restrictions complicate building and packaging. Furthermore, users who’ve used Homebrew expect to be able to install and keep up-to-date software from the command-line. This expectation complicates distribution, as well.</p>
+<p>Since 2012, the Mac operating system has included <a href="https://support.apple.com/en-us/HT202491">Gatekeeper</a>, a feature that requires apps to have been signed with Apple-provided cryptographic certificates in order to run. The most recent version of macOS has even begun to require apps that are distributed outside of the Mac App Store to have been <a href="https://developer.apple.com/developer-id/">notarized</a> by Apple in order to run, a <a href="https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution">process</a> which requires you to upload your app to Apple prior to release and then wait for a response.</p>
+<p>There are many reasons to use the Mac App Store for distribution — for most apps, it’s probably the right place. But if you want to use APIs that aren’t allowed in the Mac App Store, or you don’t want to have to deal with the review process, then it can make sense to opt-out, and find a different distribution channel. I’m going to show you how.</p>
+<h1><a id="our-ideal-devops-workflow" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Our Ideal DevOps Workflow</h1>
+<p>Our ideal DevOps workflow is to have our code automatically tested on every commit and automatically built and published for distribution on every release tag. There should be no manual steps between us pushing changes and users having access to them.</p>
+<p>In this case, when we say “published for distribution,” we mean that the new version of the app can be installed using Homebrew. To accomplish this we will host our own <a href="https://docs.brew.sh/Taps">Homebrew tap</a> on GitHub, and host our built app on GitHub as a <a href="https://developer.github.com/v3/repos/releases/#upload-a-release-asset">release asset</a>.</p>
+<p>‍</p>
+<h1><a id="the-six-manual-steps" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Six Manual Steps</h1>
+<p>In the context of software deployment, work that tends to be “manual, repetitive, automatable, tactical, devoid of enduring value, and that scales linearly” is known as <a href="https://landing.google.com/sre/sre-book/chapters/eliminating-toil/">toil</a>. There are six manual steps we must perform to release our app for distribution <em>after</em> committing changes, tagging them, and pushing them to GitHub — and they are all toil:</p>
+<ul>
+<li>Build the app for release.</li>
+<li>Sign the app using an Apple Developer ID certificate.</li>
+<li>Package the signed app into a disk image.</li>
+<li>Notarize the disk image.</li>
+<li>Upload the notarized disk image to GitHub as a release asset.</li>
+<li>Update the Homebrew tap with the new app version and SHA256 values.</li>
+</ul>
+<h1><a id="say-goodbye-to-toil" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Say Goodbye to Toil</h1>
+<p>What do we do with toil? We automate it away! The end result will be that whenever we push a tag to GitHub, the app will be automatically built, signed, packaged, notarized, uploaded as a GitHub release asset, and our Homebrew tap will be automatically updated to point to the new version. The whole process will take just a few minutes.</p>
+<p>The automation is a mix of continuous integration (CI) and continuous deployment (CD), implemented using a <a href="https://help.github.com/en/actions/configuring-and-managing-workflows">GitHub Actions workflow</a>.</p>
+<h1><a id="continuous-integration" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Continuous Integration</h1>
+<p>The first piece of the automation we create is continuous integration: building and testing our app after each commit. To accomplish this we run <code>xcodebuild test</code> in the GitHub Actions environment on a macOS host.</p>
+<p><em><strong>Note</strong></em> <em>: Even if your app doesn’t include tests you can still build your app on every commit and get value out of continuous integration. In that case, use the</em> <code>build</code> <em>action instead of the</em> <code>test</code> <em>action with</em> <code>xcodebuild</code>* in the last step of the workflow.*</p>
+<p>By putting the following GitHub Actions workflow in our project workspace at <code>.github/workflows/master_test.yml</code> we enable continuous integration:</p>
+<pre><code class="language-plain_text">name: master_test
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  master_test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Find first scheme of default project
+        run: |
+          echo &quot;::set-env name=SCHEME::$(xcodebuild -list -json | jq -r '.project.schemes[0]')&quot;
+      - name: Build and test app
+        shell: bash --noprofile --norc -eo pipefail {0}
+        run: |
+          xcodebuild -scheme &quot;$SCHEME&quot; test CODE_SIGN_IDENTITY=- | xcpretty
+</code></pre>
+<p>This workflow runs every time we push new commits to the <code>master</code> branch. It includes a single job that runs on a macOS host. The job includes three steps.</p>
+<p>First, the ref of the commit that triggered the workflow will be the ref checked out.</p>
+<p>Then, the default scheme of the project is determined and set as an environment variable. (This approach may seem like overkill at this point — we could just hard-code our project’s default scheme name, after all — but I’m introducing this pattern now because we will use it again in the next workflow, and it allows this workflow to be re-used without modifications with other projects.)</p>
+<p>Finally, the project is built and tested using <code>xcodebuild test</code>, and the output is piped through <a href="https://github.com/xcpretty/xcpretty">xcpretty</a> , a handy open-source tool that comes pre-installed on the GitHub Actions runners. We override the <code>CODE_SIGN_IDENTITY</code> build setting with the value “<code>—</code>” (this value is called “Sign to Run Locally” in Xcode) to enable ad-hoc code signing. This allows us to build and test the app on a single machine without needing to configure any code-signing secrets for this workflow.</p>
+<p>For this continuous integration workflow to work, a few things must be true. The above workflow file must be committed to the <code>master</code> branch of the project workspace and pushed to GitHub. The project itself must be configured with a shared scheme that contains build and test stages, and that scheme must come first in the list of schemes. Finally, the tests must be able to run when invoked via <code>xcodebuild test</code> — verify this for yourself by running the tests locally from the command-line before deploying the workflow for the first time.</p>
+<h1><a id="continuous-deployment" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Continuous Deployment</h1>
+<p>The second piece of the automation we create is the continuous deployment: publishing our app after each release tag. We use the convention that any tag that begins with the letter “<code>v</code>” is a release tag — e.g. <code>v1.2.0</code>.</p>
+<p>We run <code>xcodebuild install</code> in the GitHub Actions environment on a macOS host to build and sign the project, and then we package our app up into a disk image, notarize it, upload it as a release asset, and finally update our Homebrew tap with the lastest version information.</p>
+<p>By putting the following GitHub Actions workflow in our project workspace at <code>.github/workflows/master_deploy.yml</code> we enable continuous deployment:</p>
+<pre><code class="language-json">name: master_deploy
+
+on:
+  push:
+    tags: [ v* ]
+
+jobs:
+  master_deploy:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Find first scheme of default project
+        run: |
+          echo &quot;::set-env name=SCHEME::$(xcodebuild -list -json | jq -r '.project.schemes[0]')&quot;
+        
+      - name: Set environment variables from project settings
+        run: |
+          function set-env-from-proj { 
+            echo &quot;::set-env name=$1::$(xcodebuild -scheme &quot;$SCHEME&quot; -showBuildSettings | grep &quot; $1 &quot; | sed &quot;s/[ ]*$1 = //&quot;)&quot;
+          }
+          set-env-from-proj FULL_PRODUCT_NAME
+          set-env-from-proj INSTALL_PATH
+          set-env-from-proj PRODUCT_BUNDLE_IDENTIFIER
+          set-env-from-proj PRODUCT_MODULE_NAME
+          set-env-from-proj PRODUCT_NAME
+          set-env-from-proj PROJECT_NAME
+      - name: Import signing certificate into keychain
+        run: |
+          KEYCHAIN_FILE=default.keychain
+          KEYCHAIN_PASSWORD=myvoiceismypassport
+          security create-keychain -p $KEYCHAIN_PASSWORD $KEYCHAIN_FILE
+          security default-keychain -s $KEYCHAIN_FILE
+          security unlock-keychain -p $KEYCHAIN_PASSWORD $KEYCHAIN_FILE
+          security import &lt;(echo $SIGNING_CERTIFICATE_P12_DATA | base64 --decode) \
+                          -f pkcs12 \
+                          -k $KEYCHAIN_FILE \
+                          -P $SIGNING_CERTIFICATE_PASSWORD \
+                          -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k $KEYCHAIN_PASSWORD $KEYCHAIN_FILE
+        env:
+          SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+          SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+
+      - name: Build and test app
+        shell: bash --noprofile --norc -eo pipefail {0}
+        run: |
+          xcodebuild -scheme &quot;$SCHEME&quot; test CODE_SIGN_IDENTITY=- | xcpretty
+      - name: Build and install app
+        shell: bash --noprofile --norc -eo pipefail {0}
+        run: |
+          xcodebuild -scheme &quot;$SCHEME&quot; install DSTROOT=build/root | xcpretty
+      - name: Package app
+        run: |
+          hdiutil create \
+                  -fs HFS+ \
+                  -srcfolder &quot;build/root/$INSTALL_PATH/$FULL_PRODUCT_NAME&quot; \
+                  -volname &quot;$PRODUCT_NAME&quot; &quot;build/$PRODUCT_MODULE_NAME.dmg&quot;
+      - name: Notarize app
+        run: |
+          npx notarize-cli --file &quot;build/$PRODUCT_MODULE_NAME.dmg&quot;
+        env:
+          NOTARIZE_USERNAME: ${{ secrets.NOTARIZE_USERNAME }}
+          NOTARIZE_PASSWORD: ${{ secrets.NOTARIZE_PASSWORD }}
+
+      - name: Release app
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/${{ env.PRODUCT_MODULE_NAME }}.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Homebrew tap
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.CASK_REPO }}
+          token: ${{ secrets.CASK_REPO_TOKEN }}
+          path: homebrew-tap
+
+      - name: Update cask in Homebrew tap
+        run: |
+          CASK_NAME=$PROJECT_NAME
+          CASK_VERSION=$(echo &quot;$GITHUB_REF&quot; | cut -c12-)
+          CASK_SHA256=$(shasum --algorithm 256 &quot;build/$PRODUCT_MODULE_NAME.dmg&quot; | awk '{print $1}')
+          cd homebrew-tap
+          git config --local user.name &quot;${USER_NAME}&quot;
+          git config --local user.email &quot;${USER_NAME}@users.noreply.github.com&quot;
+          sed -i '' &quot;s/\( *version *'\)\([^']*\)'/\1${CASK_VERSION}'/&quot; Casks/${CASK_NAME}.rb
+          sed -i '' &quot;s/\( *sha256 *'\)\([^']*\)'/\1${CASK_SHA256}'/&quot; Casks/${CASK_NAME}.rb
+          git add Casks/${CASK_NAME}.rb
+          git commit -m &quot;update ${CASK_NAME} to v${CASK_VERSION}&quot;
+          git push origin
+        env:
+          GITHUB_REF: ${{ github.ref }}
+          USER_NAME: ${{ github.event.sender.login }}
+</code></pre>
+<p>There’s a lot more going with this workflow than the previous one, but the two start off similarly. This workflow runs every time we push new tags to the repository that start with the letter “<code>v</code>”. It includes a single job that runs on a macOS host. The job includes eleven steps.</p>
+<p>As before, the first step checks out the project. This time, the tag that triggered the workflow is the tag that’s checked out.</p>
+<p>Then, the default scheme of the project is determined and set as an environment variable, as before.</p>
+<p>Next, additional build settings from the project are read using <code>xcodebuild -showBuildSettings</code> and set as environment variables for use by subsequent steps. This avoids the need to hard-code project details in the workflow and makes it easier to re-use the workflow with other projects.</p>
+<p>The next step is to set up a macOS keychain on the action runner host that contains our app’s signing credentials because Xcode expects to find the signing identity in the default keychain. The step uses the <code>SIGNING_CERTIFICATE_P12_DATA</code> and <code>SIGNING_CERTIFICATE_PASSWORD</code> secrets and the <code>security</code> tool to import the signing certificate. (See below for information about how to set up the secrets.) This is the most complicated and least documented step of this process. The answers to <a href="https://stackoverflow.com/questions/39868578/security-codesign-in-sierra-keychain-ignores-access-control-settings-and-ui-p">this</a> StackOverflow question provide some context.</p>
+<p>Now we test the app. We never want to release a version of the app that fails tests, so we make sure the tests pass before we move on. If your project does not include tests, omit this step.</p>
+<p>Once the app has been tested the next step rebuilds it for installation and then install the app into a distribution root (<code>DSTROOT</code>).</p>
+<p>Upon successful completion of the install step, the app is packaged into a disk image using <code>hdiutil</code>.</p>
+<p>The next step in the workflow notarizes the disk image using the <a href="https://www.npmjs.com/package/notarize-cli">notarize-cli </a> tool. This is a tool I wrote to simplify notarization of Mac apps in the context of continuous deployment. It wraps two tools provided with Xcode — <code>altool</code> and <code>stapler</code>. It uses those tools to upload the disk image to Apple, wait for success, and then staple the notarization to the disk image. This step uses the <code>NOTARIZE_USERNAME</code> and <code>NOTARIZE_PASSWORD</code> secrets to authenticate to Apple. (See below for information about how to set up the secrets.)</p>
+<p>The app is ready to be deployed. The next step is to deliver the notarized disk image to GitHub as a release asset. We use the <a href="https://github.com/softprops/action-gh-release">softprops/action-gh-release</a>  action from the <a href="https://github.com/marketplace">GitHub marketplace</a> to perform this action for us. This step uses the <a href="https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token#about-the-github_token-secret">GITHUB_TOKEN</a>  secret which is automatically set up for us by GitHub Actions. This token is scoped to allow us to make modifications only to the repository that hosts the running workflow.</p>
+<p>At this point, the app has been delivered. Someone poking around on GitHub could find the released app and download it, but who has time for that? To finish deployment we still need to update a Homebrew tap. Popular apps can be hosted in the <a href="https://github.com/Homebrew/homebrew-cask/tree/master/Casks">homebrew-cask</a> repository, but if your app doesn’t have an audience yet it won’t be accepted for inclusion in the official tap — you’ll need to host your own. Fortunately, hosting your own tap is easy and Homebrew supports installing from 3rd-party taps seamlessly. (See below for information about how to set up a tap and cask for use with this workflow.)</p>
+<p>The next step in the workflow checks out the tap. This step uses the <code>CASK_REPO</code> and <code>CASK_REPO_TOKEN</code> secrets. (See below for information about how to set up the secrets.) The cask repo token is saved in the checked-out workspace and is used to push changes back to the tap repository in the next step.</p>
+<p>The final step is to update the cask with the app’s new version number and the hash value of the release asset. The version number is determined by the release tag that triggered the workflow, and the hash is calculated from the notarized disk image. The commit author is set to the user that triggered the workflow, and the changes are committed and pushed back to the tap repository.</p>
+<p>For this workflow to work, a few things must be true. The above workflow file must be committed to the <code>master</code> branch of the project workspace and pushed to GitHub. The project itself must be configured with a default shared scheme that contains build and test stages. The project must be configured with the name of the code signing identity to use when building for release, and that name must match the signing credentials that are stored in the GitHub secret. Finally, there must already exist a Cask in a Homebrew tap repository for the final step to update.</p>
+<h1><a id="project-configuration" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Configuration</h1>
+<p>There are a seemingly infinite number of ways to configure an Xcode project. I hope these workflows work with yours. I’ve verified that these workflows work with a newly-created macOS app project configured with UI tests, with the exception that the default <code>testLaunchPerformance</code> test fails when run from the command-line — delete that test and you should be good to go.</p>
+<p>To configure a project for Developer ID signing, first add you Apple ID account in the “Accounts” preferences of Xcode. After adding the account, select your team from the Team table and click the “Manage Certificates…” button. Look for a “Developer ID Application” certificate. If you don’t see one, create one by clicking the “+” button and selecting “Developer ID Application” from the menu.</p>
+<p><em><strong>Note</strong></em> <em>: If you create the certificate with Xcode then it should also automatically be imported into your local keychain. If for some reason you need to manually download your Developer ID certificate and private key and import them into your keychain you can do so from</em> <em><a href="">this page</a><em>​</em>. Double-click the downloaded “.cer” file to import it using the “Keychain Access” app.</em></p>
+<p>Next, make the following changes to the “Signing &amp; Capabilities” settings for the app target in the Xcode project:</p>
+<ul>
+<li>Disable “Automatically manage signing.”</li>
+<li>Set “Team” to the team associated with your Apple ID.</li>
+<li>Set “Provisioning Profile” to “None”].</li>
+<li>Set “Signing Certificate” to “Developer ID Application.”</li>
+</ul>
+<p>It should now be possible to use Xcode to sign your app with your Developer ID certificate. Verify that everything is configured correctly by selecting “Archive” from the “Product” menu to build the application for release. Then select “Organizer” from the “Window” menu and find the newly-created archive in the Archives table. Click “Distribute App” and then select “Developer ID” and click “Next.” Select “Export” and click “Next.” Leave the “Distribution certificate” and profile settings at their default values and click “Next.” Enter your credentials if prompted and finally click “Export” to save the signed app.</p>
+<p>That was a lot of tedious clicking and waiting — no wonder we decided to automate this!</p>
+<h1><a id="secret-configuration" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Secret Configuration</h1>
+<p>We’ve created a GitHub Actions workflow to perform continuous integration and continuous delivery, and our project is configured for Developer ID code signing. The next thing to do is set the secrets that our workflow needs to run successfully.</p>
+<p>To add a secret to your GitHub repository, navigate to the repository “Settings” tab. Then select “Secrets” from the sidebar. Click “New secret”, then enter the name of the secret and the value. Finally, click “Add secret.”</p>
+<p><strong>SIGNING_CERTIFICATE_PASSWORD</strong></p>
+<p>This secret should be set to a password that will be used to encrypt the p12 file that you create while generating the <code>SIGNING_CERTIFICATE_P12_DATA</code> secret, below.</p>
+<p>Here’s my favorite one-liner to generate a random password using the command-line:</p>
+<pre><code class="language-plain_text">&lt; /dev/urandom LC_CTYPE=C tr -dc a-zA-Z0-9 | head -c 32; echo
+</code></pre>
+<p><strong>SIGNING_CERTIFICATE_P12_DATA</strong></p>
+<p>This secret should be set to the base64-encoded contents of a p12 file containing the signing certificate and private key.</p>
+<p>To set this secret we first need to export the signing certificate and private key from the keychain. To do this, open the “Keychain Access” app, make sure your default “login” keychain is selected, and then select the “My Certificates” category. Select your Developer ID certificate from the list and choose “Export Items…” from the “File” menu. Leave the file format set to “Personal Information Exchange (.p12)” and click “Save.” Enter the value of the <code>SIGNING_CERTIFICATE_PASSWORD</code> secret when prompted for an encryption password. Then enter your local account credentials when prompted by Keychain Access.</p>
+<p>Next, open a terminal window and find the p12 file on disk. Run the following command to base64-encode the file and copy it to your clipboard:</p>
+<pre><code class="language-plain_text">cat Certificates.p12 | base64 | pbcopy
+</code></pre>
+<p>Paste the copied text as the value of the secret.</p>
+<p><strong>NOTARIZE_USERNAME</strong>: This secret should be set to the Apple ID of your developer account.</p>
+<p><strong>NOTARIZE_PASSWORD</strong>: This secret should be set to an application-specific password for your Apple ID account. Follow <a href="https://support.apple.com/en-us/HT204397">these instructions</a> to create an application-specific password.</p>
+<p><strong>CASK_REPO</strong>: This secret should be set to the fully-qualified name of the GitHub repository that hosts the cask for this app, e.g. <code>bacongravy/homebrew-tap</code>.</p>
+<p><strong>CASK_REPO_TOKEN</strong>: This secret should be set to a GitHub personal access token (PAT) that is scoped to have write access to the repository specified by <code>CASK_REPO</code>. To generate a PAT, navigate to your user “Settings” on GitHub, select “Developer Settings” from the sidebar, then select “Personal access tokens” from the sidebar, then click “Generate new token.” Give the token a name, select the “repo” scope, and click “Generate token.” Copy the displayed token and add it as a secret to your repository.</p>
+<h1><a id="tap-configuration" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tap Configuration</h1>
+<p>A Homebrew tap is just a GitHub repository that follows certain conventions. Read <a href="https://docs.brew.sh/How-to-Create-and-Maintain-a-Tap">the documentation</a> for more information.</p>
+<p>I suggest naming your tap repository<code>homebrew-tap</code>. This will allow you to install your app using a command like the following:</p>
+<pre><code class="language-plain_text"> brew install &lt;username&gt;/tap/&lt;app-name&gt;
+</code></pre>
+<p>Your fully-qualified repository name would be <code>&lt;username&gt;/homebrew-tap</code>, and that’s the value you should set the <code>CASK_REPO</code> secret to.</p>
+<p>Let’s suppose your project’s repository is named “chuck-wagon,” your Xcode project file is named “chuck-wagon.xcodeproj”, the default scheme is named “Chuck Wagon,” and the scheme produces a product named “Chuck Wagon.app”. In this case, the workflow will publish a disk image named “Chuck_Wagon.dmg” and the cask file is expected to be named “chuck-wagon.rb”.</p>
+<p>You will need to create the cask file in your tap repository. Read <a href="https://github.com/Homebrew/homebrew-cask/blob/master/doc/development/adding_a_cask.md">the documentation</a> for more information.</p>
+<p>Here is what the cask for “Chuck Wagon” might look like:</p>
+<p>‍</p>
+<pre><code class="language-json">cask 'chuck-wagon' do
+  version 'x.x.x'
+  sha256 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+  url &quot;https://github.com/&lt;username&gt;/chuck-wagon/releases/download/v#{version}/Chuck_Wagon.dmg&quot;
+  appcast 'https://github.com/&lt;username&gt;/chuck-wagon/releases.atom'
+  name 'Chuck Wagon'
+  homepage 'https://github.com/&lt;username&gt;/chuck-wagon'
+
+  app 'Chuck Wagon.app'
+
+end
+</code></pre>
+<p>To make this work for your app you would need to replace “<username>”, “chuck-wagon”, “Chuck Wagon”, “Chuck Wagon.app”, and “Chuck_Wagon.dmg” with the values appropriate for your GitHub username and for your app.</p>
+<p>After you create a file in your <code>CASK_REPO</code> repository at the path <code>/Casks/$PROJECT_NAME</code>, the <code>master_deploy</code> workflow will be able to update the version and sha256 values.</p>
+<p>‍</p>
+<h1><a id="conclusion" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
+<p>It wasn’t easy, but we did it. Congratulations!</p>
+<p>I have set up a <a href="https://github.com/bacongravy/mac-app-devops-demo">demo repository</a> so that you can see a live example. You can view a log of a run of the <a href="https://github.com/bacongravy/mac-app-devops-demo/blob/master/.github/workflows/master_deploy.yml">master_deploy</a>  workflow <a href="https://github.com/bacongravy/mac-app-devops-demo/runs/728981487?check_suite_focus=true">here</a>. The cask for the demo app built by that workflow can be found <a href="https://github.com/bacongravy/homebrew-tap/blob/master/Casks/mac-app-devops-demo.rb">here</a>.</p>
+<p>I hope this article has inspired you to automate toil out of your life. Happy coding!</p>
+<p>‍</p>
+
+			</div>
+
+		
+	  
+		<footer>
+		 <p class="meta">
+
+			<strong>Categories:</strong>&nbsp; 
+			<span class="categories">
+			
+			    <a class='category' href='Blog.html'>Blog</a>&nbsp;
+			 
+			</span>
+		    </p>
+		    <p class="meta">
+		      
+		 </p>
+	    
+		<div class="sharing">
+		  
+          
+
+          
+
+		</div>
+
+	    <p class="meta">
+	    
+	    
+	        <a class="basic-alignment right" href="16676590959271.html" 
+	        title="Next Post: 刷题记录">刷题记录 &raquo;</a>
+	    
+	    </p>
+	  </footer>
+	</article>
+</div>
+ <aside class="sidebar"> 
+
+	<section>
+	  <h1>Categories</h1>
+	  <ul id="recent_posts">
+	  
+	      <li class="post">
+	        <a href="Blog.html"><strong>Blog&nbsp;(6)</strong></a>
+	        
+	        
+	        
+	      </li>
+	  
+	      <li class="post">
+	        <a href="Awesome.html"><strong>Awesome&nbsp;(1)</strong></a>
+	        
+	        
+	        
+	      </li>
+	  
+	      <li class="post">
+	        <a href="Other.html"><strong>Other&nbsp;(1)</strong></a>
+	        
+	        
+	        
+	      </li>
+	   
+	  </ul>
+	</section>
+	<section>
+	  <h1>Recent Posts</h1>
+	  <ul id="recent_posts">
+	  
+	      
+		      <li class="post">
+		        <a href="16676592378783.html">Indie Mac App DevOps With GitHub Actions</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="16676590959271.html">刷题记录</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="16676590456713.html">swift学习记录</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="16676588458737.html">装机方案</a>
+		      </li>
+	     
+	  
+	      
+		      <li class="post">
+		        <a href="16676585039075.html">Awesome Mac</a>
+		      </li>
+	     
+	  
+	      
+	  
+	      
+	  
+	      
+	   
+	  </ul>
+	</section>
+	
+</aside> </div></div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 -  -
+  <span class="credit">Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a> &nbsp;&nbsp; Theme by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="asset/prism.js"></script>
+
+
+<style type="text/css">
+  
+/* PrismJS 1.14.0
+https://prismjs.com/download.html#themes=prism-solarizedlight&languages=markup+css+clike+javascript */
+/*
+ Solarized Color Schemes originally by Ethan Schoonover
+ http://ethanschoonover.com/solarized
+
+ Ported for PrismJS by Hector Matos
+ Website: https://krakendev.io
+ Twitter Handle: https://twitter.com/allonsykraken)
+*/
+
+/*
+SOLARIZED HEX
+--------- -------
+base03    #002b36
+base02    #073642
+base01    #586e75
+base00    #657b83
+base0     #839496
+base1     #93a1a1
+base2     #eee8d5
+base3     #fdf6e3
+yellow    #b58900
+orange    #cb4b16
+red       #dc322f
+magenta   #d33682
+violet    #6c71c4
+blue      #268bd2
+cyan      #2aa198
+green     #859900
+*/
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #657b83; /* base00 */
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+  background: #073642; /* base02 */
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+  background: #073642; /* base02 */
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 1em;
+  margin: .5em 0;
+  overflow: auto;
+  border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background-color: #fdf6e3; /* base3 */
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #93a1a1; /* base1 */
+}
+
+.token.punctuation {
+  color: #586e75; /* base01 */
+}
+
+.namespace {
+  opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #268bd2; /* blue */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.url,
+.token.inserted {
+  color: #2aa198; /* cyan */
+}
+
+.token.entity {
+  color: #657b83; /* base00 */
+  background: #eee8d5; /* base2 */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #859900; /* green */
+}
+
+.token.function,
+.token.class-name {
+  color: #b58900; /* yellow */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #cb4b16; /* orange */
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+
+pre[class*="language-"].line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+    position: relative;
+    white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+    .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+    }
+
+        .line-numbers-rows > span:before {
+            content: counter(linenumber);
+            color: #999;
+            display: block;
+            padding-right: 0.8em;
+            text-align: right;
+        }
+
+</style>
+  
+    
+
+
+</body>
+</html>
