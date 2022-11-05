@@ -4,13 +4,24 @@
   <title><![CDATA[AisLing Site]]></title>
   <link href="https://huang5556019.github.io/atom.xml" rel="self"/>
   <link href="https://huang5556019.github.io/"/>
-  <updated>2022-11-05T20:32:44+08:00</updated>
+  <updated>2022-11-05T20:46:05+08:00</updated>
   <id>https://huang5556019.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[About Author]]></title>
+    <link href="https://huang5556019.github.io/16676520577476.html"/>
+    <updated>2022-11-05T20:40:57+08:00</updated>
+    <id>https://huang5556019.github.io/16676520577476.html</id>
+    <content type="html"><![CDATA[
+<p><a href="https://github.com/huang5556019">Github</a></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[swift tutorials]]></title>
