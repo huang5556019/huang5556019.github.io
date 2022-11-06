@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <title>
     
-  swift tutorials - AisLing Site
+  c++ basic for leetcode - AisLing Site
   
 
   </title>
@@ -79,28 +79,46 @@ $(document).ready(function(event) {
 <div>
 	<article class="hentry" role="article">
 	<header>
-			  	<h1 class="entry-title">swift tutorials</h1>
-				<p class="meta"><time datetime="2022-11-05T20:13:21+08:00" pubdate data-updated="true">2022/11/05 20:13 下午</time></p>
+			  	<h1 class="entry-title">c++ basic for leetcode</h1>
+				<p class="meta"><time datetime="2022-11-06T09:43:18+08:00" pubdate data-updated="true">2022/11/06 09:43 上午</time></p>
 			 </header>
 		  	<div class="entry-content">
-			  	<blockquote>
-<p>存放收集自用的swift学习资源</p>
-</blockquote>
+			  	<h2><a id="%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>输入输出</h2>
+<p>主要学习使用C++怎么输入输出</p>
 <span id="more"></span><!-- more -->
-<h2><a id="official-website-entry" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>official website entry</h2>
-<p><a href="https://developer.apple.com/swift/">https://developer.apple.com/swift/</a><br />
-<a href="https://www.swift.org/">https://www.swift.org/</a></p>
-<h3><a id="documentation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>documentation</h3>
-<p><a href="https://docs.swift.org/swift-book/index.html">https://docs.swift.org/swift-book/index.html</a><br />
-<a href="https://developer.apple.com/documentation/swift/">https://developer.apple.com/documentation/swift/</a><br />
-<a href="https://developer.apple.com/learn/curriculum/">https://developer.apple.com/learn/curriculum/</a></p>
-<h3><a id="video-tutorials" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>video tutorials</h3>
-<p><a href="https://developer.apple.com/videos/swift">https://developer.apple.com/videos/swift</a></p>
-<h3><a id="forums" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>forums</h3>
-<p><a href="https://developer.apple.com/forums/">https://developer.apple.com/forums/</a><br />
-<a href="https://developer.apple.com/forums/tags/swift">https://developer.apple.com/forums/tags/swift</a></p>
-<h3><a id="%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%AB%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>学习网站</h3>
-<p><a href="https://www.programiz.com/swift-programming">https://www.programiz.com/swift-programming</a></p>
+<p>需要引入头文件</p>
+<pre><code class="language-plain_text">#include &lt;iostream&gt;
+</code></pre>
+<p>该文件定义了 cin、cout、cerr 和 clog 对象，分别对应于标准输入流、标准输出流、非缓冲标准错误流和缓冲标准错误流。</p>
+<h3><a id="%E8%BE%93%E5%85%A5cin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>输入cin</h3>
+<p>预定义的对象 cin 是 iostream 类的一个实例。cin 对象附属到标准输入设备，通常是键盘。cin 是与流提取运算符 &gt;&gt; 结合使用的</p>
+<p>C++ 编译器根据要输入值的数据类型，选择合适的流提取运算符来提取值，并把它存储在给定的变量中。</p>
+<p>流提取运算符 &gt;&gt; 在一个语句中可以多次使用，如果要求输入多个数据</p>
+<pre><code class="language-plain_text">cin &gt;&gt; name &gt;&gt; age;
+</code></pre>
+<h3><a id="%E8%BE%93%E5%87%BAcout" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>输出cout</h3>
+<p>预定义的对象 cout 是 iostream 类的一个实例。cout 对象&quot;连接&quot;到标准输出设备，通常是显示屏。cout 是与流插入运算符 &lt;&lt; 结合使用的，</p>
+<p>C++ 编译器根据要输出变量的数据类型，选择合适的流插入运算符来显示值。&lt;&lt; 运算符被重载来输出内置类型（整型、浮点型、double 型、字符串和指针）的数据项。</p>
+<p>流插入运算符 &lt;&lt; 在一个语句中可以多次使用，如上面实例中所示，endl 用于在行末添加一个换行符。</p>
+<pre><code class="language-plain_text"> cout &lt;&lt; &quot;名称是: &quot; &lt;&lt; name &lt;&lt; &quot; &quot; &lt;&lt;&quot;年龄: &quot; &lt;&lt; age &lt;&lt; &quot;\n&quot; &lt;&lt; endl;
+</code></pre>
+<h3><a id="%E4%BE%8B%E5%AD%901%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>例子1:基本用法</h3>
+<pre><code class="language-plain_text">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+   char name[50];
+   int age;
+   cout &lt;&lt; &quot;请输入您的名称与年龄 \n&quot;;
+   cin &gt;&gt; name &gt;&gt; age;
+   cout &lt;&lt; &quot;名称是: &quot; &lt;&lt; name &lt;&lt; &quot; &quot; &lt;&lt;&quot;年龄: &quot; &lt;&lt; age &lt;&lt; &quot;\n&quot; &lt;&lt; endl;
+}
+</code></pre>
+<p>Output</p>
+<pre><code class="language-plain_text">请输入您的名称与年龄 
+aisling
+99
+名称是: aisling 年龄: 99
+</code></pre>
 
 			</div>
 
@@ -130,9 +148,9 @@ $(document).ready(function(event) {
 
 	    <p class="meta">
 	    
-	        <a class="basic-alignment left" href="swiftui%20tutorials.html" 
-	        title="Previous Post: swiftui tutorials">&laquo; swiftui tutorials</a>
 	    
+	        <a class="basic-alignment right" href="16676989567209.html" 
+	        title="Next Post: swift basic for leetcode">swift basic for leetcode &raquo;</a>
 	    
 	    </p>
 	  </footer>
@@ -228,6 +246,8 @@ $(document).ready(function(event) {
 
 
 
+
+<script src="asset/prism.js"></script>
 
 
 <style type="text/css">
