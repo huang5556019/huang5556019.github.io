@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <title>
     
-  swift basic for leetcode - AisLing Site
+  PlayCover 添加ipa源教程 - AisLing Site
   
 
   </title>
@@ -79,82 +79,53 @@ $(document).ready(function(event) {
 <div>
 	<article class="hentry" role="article">
 	<header>
-			  	<h1 class="entry-title">swift basic for leetcode</h1>
-				<p class="meta"><time datetime="2022-11-06T09:42:36+08:00" pubdate data-updated="true">2022/11/06 09:42 上午</time></p>
+			  	<h1 class="entry-title">PlayCover 添加ipa源教程</h1>
+				<p class="meta"><time datetime="2022-11-12T22:16:01+08:00" pubdate data-updated="true">2022/11/12 22:16 下午</time></p>
 			 </header>
 		  	<div class="entry-content">
-			  	<h2><a id="%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%9F%BA%E7%A1%80" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>输入输出基础</h2>
-<p>主要学习使用swift怎么输入输出</p>
-<span id="more"></span><!-- more -->
-<h3><a id="%E8%BE%93%E5%87%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>输出</h3>
-<h4><a id="print%E5%87%BD%E6%95%B0%E8%AF%AD%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>print()函数语法</h4>
-<pre><code class="language-plain_text">print(items: separator: terminator:)
+			  	<blockquote>
+<p>下载地址:<a href="https://ipa.playcover.workers.dev/">https://ipa.playcover.workers.dev/</a></p>
+</blockquote>
+<p>ipa源模版</p>
+<pre><code class="language-plain_text">[
+    {
+        &quot;bundleID&quot;: &quot;com.miHoYo.GenshinImpact&quot;,
+        &quot;name&quot;: &quot;Genshin Impact&quot;,
+        &quot;version&quot;: &quot;2.8.0&quot;,
+        &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.miHoYo.GenshinImpact&quot;,
+        &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/0:/Genshin%20Impact/US/Genshin%20Impact_2.8.0.ipa&quot;
+    },
+    {
+            &quot;bundleID&quot;: &quot;com.blizzard.diablo.immortal&quot;,
+            &quot;name&quot;: &quot;Diablo Immortal&quot;,
+            &quot;version&quot;: &quot;1.5.2&quot;,
+            &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.blizzard.diablo.immortal&quot;,
+            &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/1:/IPAs/Diablo%20Immortal/Diablo%20Immortal_1.5.2.ipa&quot;
+    },
+    {
+            &quot;bundleID&quot;: &quot;com.netflix.Netflix&quot;,
+            &quot;name&quot;: &quot;Netflix&quot;,
+            &quot;version&quot;: &quot;14.53.0&quot;,
+            &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.netflix.Netflix&quot;,
+            &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/1:/IPAs/Netflix/Netflix_14.53.0.ipa&quot;
+    },
+    {
+            &quot;bundleID&quot;: &quot;com.google.ios.youtube&quot;,
+            &quot;name&quot;: &quot;YouTube&quot;,
+            &quot;version&quot;: &quot;17.38.9&quot;,
+            &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.google.ios.youtube&quot;,
+            &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/1:/IPAs/YouTube/YouTube_17.38.9.ipa&quot;
+    },
+    {
+        &quot;bundleID&quot;: &quot;com.nintendo.znma&quot;,
+        &quot;name&quot;: &quot;Nintendo Switch Parental Controls&quot;,
+        &quot;version&quot;: &quot;1.17.0&quot;,
+        &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.nintendo.znma&quot;,
+        &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/0:/Nintendo%20Switch%20Parental%20Controls/Nintendo%20Switch%20Parental%20Controls_1.17.0.ipa&quot;
+    }
+]
 </code></pre>
-<ul>
-<li><strong>items</strong> 双引号包括在内的需要输出的变量</li>
-<li><strong>separator(可选)</strong> 允许使用间隔符分割items 默认使用单空格(&quot; &quot;)分割</li>
-<li><strong>terminator(可选)</strong> 允许在输出结尾添加特殊符号如换行(&quot;\n&quot;)与制表符(&quot;\t&quot;) 默认使用换行符</li>
-</ul>
-<h4><a id="%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>使用实例</h4>
-<h5><a id="%E4%BE%8B%E5%AD%901%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>例子1:基本用法</h5>
-<p>没有使用terminator 默认为&quot;\n&quot;</p>
-<pre><code class="language-plain_text">print(&quot;Hello AisLing!&quot;)
-print(&quot;Hello Swift&quot;)
-</code></pre>
-<p>Output</p>
-<pre><code class="language-plain_text">Hello AisLing!
-Hello Swift
-</code></pre>
-<h5><a id="%E4%BE%8B%E5%AD%902%E6%89%93%E5%8D%B0%E6%8C%87%E5%AE%9A%E7%BB%93%E5%B0%BE%E7%AC%A6%E5%8F%B7" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>例子2:打印指定结尾符号</h5>
-<pre><code class="language-plain_text">print(&quot;Hello AisLing!&quot;, terminator: &quot; &quot;) 
-
-print(&quot;Hello Swift&quot;)
-</code></pre>
-<p>Output</p>
-<pre><code class="language-plain_text">Hello AisLing! Hello Swift
-</code></pre>
-<h5><a id="%E4%BE%8B%E5%AD%903%E6%89%93%E5%8D%B0%E5%B8%A6%E5%88%86%E9%9A%94%E7%AC%A6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>例子3:打印带分隔符</h5>
-<p>使用&quot;. &quot;分割多个dayitems</p>
-<pre><code class="language-plain_text">print(&quot;New Year&quot;, 2022, &quot;See you soon!&quot;, separator: &quot;. &quot;)
-</code></pre>
-<p>Output</p>
-<pre><code class="language-plain_text">New Year. 2022. See you soon!
-</code></pre>
-<h5><a id="%E4%BE%8B%E5%AD%904%E6%89%93%E5%8D%B0%E5%8F%98%E9%87%8F%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>例子4:打印变量与字符串</h5>
-<pre><code class="language-plain_text">let count = 10
-let fruteType = &quot;apple&quot;
-print (&quot;Hello \(count) \(fruteType)&quot;)
-print (&quot;Hello&quot; + &quot; \(count) &quot; +  fruteType)
-</code></pre>
-<p>Output</p>
-<pre><code class="language-plain_text">Hello 10 apple
-Hello 10 apple
-</code></pre>
-<h3><a id="%E8%BE%93%E5%85%A5" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>输入</h3>
-<p>输入的场景不适用Xcode playground场景</p>
-<h4><a id="readline%E5%87%BD%E6%95%B0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>readLine()函数</h4>
-<pre><code class="language-plain_text">/// - Parameter strippingNewline: If `true`, newline characters and character
-///   combinations are stripped from the result; otherwise, newline characters
-///   or character combinations are preserved. The default is `true`.
-/// - Returns: The string of characters read from standard input. If EOF has
-///   already been reached when `readLine()` is called, the result is `nil`.
-public func readLine(strippingNewline: Bool = true) -&gt; String?
-</code></pre>
-<ul>
-<li><strong>strippingNewline</strong> 换行符是否从结果中剥离 默认剥离</li>
-<li>返回值为可选值 使用时需要注意</li>
-</ul>
-<h5><a id="%E4%BE%8B%E5%AD%901%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>例子1:基本用法</h5>
-<pre><code class="language-plain_text">print(&quot;Enter your favorite programming language:&quot;)
-if let name = readLine() {
-   print(&quot;Your favorite programming language is \(name).&quot;)
-}
-</code></pre>
-<p>Output</p>
-<pre><code class="language-plain_text">Enter your favorite programming language:
-Swift
-Your favorite programming language is Swift.
-</code></pre>
+<p>然后将此json文件托管到github</p>
 
 			</div>
 
@@ -166,7 +137,7 @@ Your favorite programming language is Swift.
 			<strong>Categories:</strong>&nbsp; 
 			<span class="categories">
 			
-			    <a class='category' href='Blog.html'>Blog</a>&nbsp;
+			    <a class='category' href='Other.html'>Other</a>&nbsp;
 			 
 			</span>
 		    </p>
@@ -184,12 +155,9 @@ Your favorite programming language is Swift.
 
 	    <p class="meta">
 	    
-	        <a class="basic-alignment left" href="16676989986299.html" 
-	        title="Previous Post: c++ basic for leetcode">&laquo; c++ basic for leetcode</a>
 	    
-	    
-	        <a class="basic-alignment right" href="16676982651118.html" 
-	        title="Next Post: Learn Algorithms (C++)">Learn Algorithms (C++) &raquo;</a>
+	        <a class="basic-alignment right" href="16679977025955.html" 
+	        title="Next Post: awesome-myself-tools">awesome-myself-tools &raquo;</a>
 	    
 	    </p>
 	  </footer>

@@ -4,7 +4,7 @@
   <title><![CDATA[AisLing Site]]></title>
   <link href="https://huang5556019.github.io/atom.xml" rel="self"/>
   <link href="https://huang5556019.github.io/"/>
-  <updated>2022-11-09T21:58:33+08:00</updated>
+  <updated>2022-11-12T23:43:21+08:00</updated>
   <id>https://huang5556019.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://www.coderforart.com/">CoderForArt</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PlayCover 添加ipa源教程]]></title>
+    <link href="https://huang5556019.github.io/16682625612952.html"/>
+    <updated>2022-11-12T22:16:01+08:00</updated>
+    <id>https://huang5556019.github.io/16682625612952.html</id>
+    <content type="html"><![CDATA[
+<blockquote>
+<p>下载地址:<a href="https://ipa.playcover.workers.dev/">https://ipa.playcover.workers.dev/</a></p>
+</blockquote>
+<p>ipa源模版</p>
+<pre><code class="language-plain_text">[
+    {
+        &quot;bundleID&quot;: &quot;com.miHoYo.GenshinImpact&quot;,
+        &quot;name&quot;: &quot;Genshin Impact&quot;,
+        &quot;version&quot;: &quot;2.8.0&quot;,
+        &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.miHoYo.GenshinImpact&quot;,
+        &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/0:/Genshin%20Impact/US/Genshin%20Impact_2.8.0.ipa&quot;
+    },
+    {
+            &quot;bundleID&quot;: &quot;com.blizzard.diablo.immortal&quot;,
+            &quot;name&quot;: &quot;Diablo Immortal&quot;,
+            &quot;version&quot;: &quot;1.5.2&quot;,
+            &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.blizzard.diablo.immortal&quot;,
+            &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/1:/IPAs/Diablo%20Immortal/Diablo%20Immortal_1.5.2.ipa&quot;
+    },
+    {
+            &quot;bundleID&quot;: &quot;com.netflix.Netflix&quot;,
+            &quot;name&quot;: &quot;Netflix&quot;,
+            &quot;version&quot;: &quot;14.53.0&quot;,
+            &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.netflix.Netflix&quot;,
+            &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/1:/IPAs/Netflix/Netflix_14.53.0.ipa&quot;
+    },
+    {
+            &quot;bundleID&quot;: &quot;com.google.ios.youtube&quot;,
+            &quot;name&quot;: &quot;YouTube&quot;,
+            &quot;version&quot;: &quot;17.38.9&quot;,
+            &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.google.ios.youtube&quot;,
+            &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/1:/IPAs/YouTube/YouTube_17.38.9.ipa&quot;
+    },
+    {
+        &quot;bundleID&quot;: &quot;com.nintendo.znma&quot;,
+        &quot;name&quot;: &quot;Nintendo Switch Parental Controls&quot;,
+        &quot;version&quot;: &quot;1.17.0&quot;,
+        &quot;itunesLookup&quot;: &quot;http://itunes.apple.com/lookup?bundleId=com.nintendo.znma&quot;,
+        &quot;link&quot;: &quot;https://ipa.playcover.workers.dev/0:/Nintendo%20Switch%20Parental%20Controls/Nintendo%20Switch%20Parental%20Controls_1.17.0.ipa&quot;
+    }
+]
+</code></pre>
+<p>然后将此json文件托管到github</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[awesome-myself-tools]]></title>
