@@ -4,7 +4,7 @@
   <title><![CDATA[AisLing Site]]></title>
   <link href="https://huang5556019.github.io/atom.xml" rel="self"/>
   <link href="https://huang5556019.github.io/"/>
-  <updated>2022-11-12T23:43:21+08:00</updated>
+  <updated>2022-11-14T06:50:23+08:00</updated>
   <id>https://huang5556019.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,6 +12,192 @@
   </author>
   <generator uri="http://www.coderforart.com/">CoderForArt</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[代码随想录读书笔记]]></title>
+    <link href="https://huang5556019.github.io/16683781568978.html"/>
+    <updated>2022-11-14T06:22:36+08:00</updated>
+    <id>https://huang5556019.github.io/16683781568978.html</id>
+    <content type="html"><![CDATA[
+<blockquote>
+<p><a href="https://www.programmercarl.com/">https://www.programmercarl.com/</a><br />
+选用语言c++</p>
+</blockquote>
+<span id="more"></span><!-- more -->
+<h2><a id="%E7%BC%96%E7%A8%8B%E7%B4%A0%E5%85%BB" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>编程素养</h2>
+<h3><a id="%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>代码规范</h3>
+<p>参考google c++编程规范</p>
+<p>变量命名使用小驼峰</p>
+<h3><a id="%E5%BA%93%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>库函数使用</h3>
+<ul>
+<li>
+<p>如果题目关键的部分直接用库函数就可以解决，建议不要使用库函数。</p>
+</li>
+<li>
+<p>如果库函数仅仅是 解题过程中的一小部分，并且你已经很清楚这个库函数的内部实现原理的话，那么直接用库函数。</p>
+</li>
+</ul>
+<h3><a id="%E6%9C%AC%E5%9C%B0%E7%BC%96%E8%AF%91" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>本地编译</h3>
+<p>参考如下示例 采用添加日志输出的方式</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+class Solution {
+public:
+    int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {
+        vector&lt;int&gt; dp(cost.size());
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        for (int i = 2; i &lt; cost.size(); i++) {
+            dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i];
+        }
+        return min(dp[cost.size() - 1], dp[cost.size() - 2]);
+    }
+};
+
+int main() {
+    int a[] = {1, 100, 1, 1, 1, 100, 1, 1, 100, 1};
+    vector&lt;int&gt; cost(a, a + sizeof(a) / sizeof(int));
+    Solution solution;
+    cout &lt;&lt; solution.minCostClimbingStairs(cost) &lt;&lt; endl;
+}
+</code></pre>
+<h3><a id="%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%A8%A1%E5%BC%8Facm%E6%A8%A1%E5%BC%8F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>核心代码模式&amp;ACM模式</h3>
+<p>由于自己刷题多是牛客  所以目前选择ACM</p>
+<h4><a id="%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%A8%A1%E5%BC%8F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>核心代码模式</h4>
+<p>如下示例只需要填入相关算法即可</p>
+<pre><code class="language-plain_text">class Solution {
+public:
+   int getDays(vector&lt;int&gt;&amp; work, vector&lt;int&gt;&amp; gym) {
+       // 处理逻辑
+   }
+};
+</code></pre>
+<h4><a id="acm%E6%A8%A1%E5%BC%8F" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>ACM模式</h4>
+<p>ACM模式下除了要写核心算法 还要处理输入输出逻辑</p>
+<pre><code class="language-plain_text">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+using namespace std;
+
+int getDays(vector&lt;int&gt;&amp; work, vector&lt;int&gt;&amp; gym);
+
+int main() {
+   int n;
+   while (cin &gt;&gt; n) {
+       vector&lt;int&gt; gym(n);
+       vector&lt;int&gt; work(n);
+       for (int i = 0; i &lt; n; i++) cin &gt;&gt; work[i];
+       for (int i = 0; i &lt; n; i++) cin &gt;&gt; gym[i];
+       int result = 0;
+
+       // 处理逻辑
+       result = getDays(work,gym);
+       cout &lt;&lt; result &lt;&lt; endl;
+   }
+   return 0;
+}
+
+int getDays(vector&lt;int&gt;&amp; work, vector&lt;int&gt;&amp; gym) {
+       // 处理逻辑
+   }
+</code></pre>
+<h3><a id="acm%E6%A8%A1%E5%BC%8F%E4%B8%8B%E5%A6%82%E4%BD%95%E8%87%AA%E5%B7%B1%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BE%93%E5%85%A5%E7%94%A8%E4%BE%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>ACM模式下如何自己构造二叉树输入用例</h3>
+<p>二叉树可以有两种存储方式，</p>
+<ul>
+<li>一种是 链式存储
+<ul>
+<li>就是大家熟悉的二叉树，用指针指向左右孩子。</li>
+</ul>
+</li>
+<li>一种是顺序存储。
+<ul>
+<li>就是用一个数组来存二叉树</li>
+<li>数组如何转化成二叉树:如果父节点的数组下标是i，那么它的左孩子下标就是i * 2 + 1，右孩子下标就是 i * 2 + 2</li>
+</ul>
+</li>
+</ul>
+<p>测试模式如下</p>
+<pre><code class="language-plain_text">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+// 根据数组构造二叉树
+TreeNode* construct_binary_tree(const vector&lt;int&gt;&amp; vec) {
+    vector&lt;TreeNode*&gt; vecTree (vec.size(), NULL);
+    TreeNode* root = NULL;
+     // 把输入数值数组，先转化为二叉树节点数组
+    for (int i = 0; i &lt; vec.size(); i++) {
+        TreeNode* node = NULL;
+        if (vec[i] != -1) node = new TreeNode(vec[i]);
+        vecTree[i] = node;
+        if (i == 0) root = node;
+    }
+    // 遍历一遍，根据规则左右孩子赋值就可以了
+    // 注意这里 结束规则是 i * 2 + 1 &lt; vec.size()，避免空指针
+    // 为什么结束规则不能是i * 2 + 2 &lt; arr.length呢?
+    // 如果i * 2 + 2 &lt; arr.length 是结束条件
+    // 那么i * 2 + 1这个符合条件的节点就被忽略掉了
+    // 例如[2,7,9,-1,1,9,6,-1,-1,10] 这样的一个二叉树,最后的10就会被忽略掉
+    // 遍历一遍，根据规则左右孩子赋值就可以了
+    for (int i = 0; i * 2 + 1 &lt; vec.size(); i++) {
+        if (vecTree[i] != NULL) {
+            vecTree[i]-&gt;left = vecTree[i * 2 + 1];
+            if(i * 2 + 2 &lt; vec.size())
+            vecTree[i]-&gt;right = vecTree[i * 2 + 2];
+        }
+    }
+    return root;
+}
+
+// 层序打印打印二叉树
+void print_binary_tree(TreeNode* root) {
+    queue&lt;TreeNode*&gt; que;
+    if (root != NULL) que.push(root);
+    vector&lt;vector&lt;int&gt;&gt; result;
+    while (!que.empty()) {
+        int size = que.size();
+        vector&lt;int&gt; vec;
+        for (int i = 0; i &lt; size; i++) {
+            TreeNode* node = que.front();
+            que.pop();
+            if (node != NULL) {
+                vec.push_back(node-&gt;val);
+                que.push(node-&gt;left);
+                que.push(node-&gt;right);
+            }
+            // 这里的处理逻辑是为了把null节点打印出来，用-1 表示null
+            else vec.push_back(-1);
+        }
+        result.push_back(vec);
+    }
+    for (int i = 0; i &lt; result.size(); i++) {
+        for (int j = 0; j &lt; result[i].size(); j++) {
+            cout &lt;&lt; result[i][j] &lt;&lt; &quot; &quot;;
+        }
+        cout &lt;&lt; endl;
+    }
+}
+
+int main() {
+    // 注意本代码没有考虑输入异常数据的情况
+    // 用 -1 来表示null
+    vector&lt;int&gt; vec = {4,1,6,0,2,5,7,-1,-1,-1,3,-1,-1,-1,8};
+    TreeNode* root = construct_binary_tree(vec);
+    print_binary_tree(root);
+}
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PlayCover 添加ipa源教程]]></title>
@@ -184,6 +370,10 @@ SSH, SFTP and Telnet client available as a web app (also self-hosted).</p>
 算法模板顾名思义就是刷题的套路模板，掌握了刷题模板之后，刷题也变得好玩起来了~<br />
 目标:完成自己的一套</p>
 </blockquote>
+<h3><a id="%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95https-www-programmercarl-com" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://www.programmercarl.com/">代码随想录</a></h3>
+<blockquote>
+<p>本站是一套完整的刷题计划，旨在帮助大家少走弯路，循序渐进学算法。</p>
+</blockquote>
 <h3><a id="fucking-algorithm-https-github-comlabuladongfucking-algorithm" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/labuladong/fucking-algorithm">fucking-algorithm</a></h3>
 <blockquote>
 <p>本仓库总共 60 多篇原创文章，都是基于 LeetCode 的题目，涵盖了所有题型和技巧，而且一定要做到举一反三，通俗易懂，绝不是简单的代码堆砌，后面有目录。<br />
@@ -234,6 +424,11 @@ must learn</p>
 <blockquote>
 <p>我的游戏程序员生涯的读书笔记合辑。你可以把它看作一个加强版的Blog。涉及图形学、实时渲染、编程实践、GPU编程、设计模式、软件工程等内容。Keep Reading , Keep Writing , Keep Coding.<br />
 少见的关于游戏开发的笔记</p>
+</blockquote>
+<h2><a id="%E9%9F%B3%E8%A7%86%E9%A2%91" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>音视频</h2>
+<h3><a id="ffmpeg%E5%8E%9F%E7%90%86-https-ffmpeg-xianwaizhiyin-net" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://ffmpeg.xianwaizhiyin.net/">FFmpeg原理</a></h3>
+<blockquote>
+<p>本书《FFmpeg原理》主要讲解 FFmpeg 原理性的知识，前面几章主要讲解一些音视频开发的基础知识，例如原始数据 YUV 跟 RGB，封装格式 FLV 跟 MP4 ，压缩编码的基本概念，还有封装格式分析</p>
 </blockquote>
 <h2><a id="deep-learn" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deep Learn</h2>
 <h3><a id="%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%88dive-into-deep-learning%EF%BC%8Cd2l-ai%EF%BC%89-https-github-comd2l-aid2l-zh-e5-8a-a8-e6-89-8b-e5-ad-a6-e6-b7-b1-e5-ba-a6-e5-ad-a6-e4-b9-a0dive-into-deep-learningd2lai" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/d2l-ai/d2l-zh#%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0dive-into-deep-learningd2lai">动手学深度学习（Dive into Deep Learning，D2L.ai）</a></h3>
