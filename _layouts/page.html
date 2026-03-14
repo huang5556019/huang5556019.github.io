@@ -1,0 +1,37 @@
+---
+layout: default
+---
+
+<div class="header-menu" id="J_header">
+  <ul class="header-item-container">
+    <li class="header-item-title">
+      <a href="/" class="title">{{ site.title }}</a>
+    </li>
+    {% for item in site.menu %}
+    <li class="header-item-left">
+      <a href="{{ item.url }}" {% if item.url contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}>
+        {{ item.title }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<main class="main-content">
+  <article class="page-container">
+    <header class="page-header">
+      <h1 class="page-title">{{ page.title }}</h1>
+    </header>
+
+    <div class="page-content">
+      {{ content }}
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="footer-content">
+    <p>© {{ site.time | date: '%Y' }} {{ site.author.name }}. Powered by <a href="https://jekyllrb.com/">Jekyll</a>.</p>
+    <p>Theme by <a href="https://github.com/tw93">Tw93</a></p>
+  </div>
+</footer>

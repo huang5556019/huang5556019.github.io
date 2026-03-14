@@ -1,0 +1,30 @@
+---
+layout: default
+title: 404 - 页面未找到
+permalink: /404.html
+---
+
+<div class="header-menu" id="J_header">
+  <ul class="header-item-container">
+    <li class="header-item-title">
+      <a href="/" class="title">{{ site.title }}</a>
+    </li>
+    {% for item in site.menu %}
+    <li class="header-item-left">
+      <a href="{{ item.url }}">{{ item.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<main class="main-content">
+  <div style="text-align: center; padding: 60px 20px;">
+    <h1 style="font-size: 4rem; color: #3498db; margin-bottom: 20px;">404</h1>
+    <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">
+      抱歉，您访问的页面不存在
+    </p>
+    <a href="/" style="display: inline-block; padding: 12px 30px; background: #3498db; color: white; border-radius: 25px; text-decoration: none;">
+      返回首页
+    </a>
+  </div>
+</main>

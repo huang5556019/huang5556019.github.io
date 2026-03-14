@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ site.description }}">
+  <title>{{ site.title }}</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+  {% seo %}
+</head>
+<body>
+  <div class="header-menu" id="J_header">
+    <ul class="header-item-container">
+      <li class="header-item-title">
+        <a href="/" class="title">{{ site.title }}</a>
+      </li>
+      {% for item in site.menu %}
+      <li class="header-item-left">
+        <a href="{{ item.url }}" {% if item.url contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ item.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <main class="main-content">
+    <div class="home-container">
+      {% for post in paginator.posts %}
+      <a href="{{ post.url }}" rel="bookmark" title="{{ post.title }}" class="header-href">
+        <article class="hentry">
+          <h2 class="entry-title">{{ post.title }}</h2>
+          <div class="entry-content">
+            <span>{{ post.date | date: "%Y-%m-%d" }}</span>
+            {% if post.excerpt %}
+            <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
+            {% endif %}
+          </div>
+        </article>
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
+      {% endif %}
+      
+      <span class="page_number">
+        Page {{ paginator.page }} of {{ paginator.total_pages }}
+      </span>
+      
+      {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+      {% endif %}
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>© {{ site.time | date: '%Y' }} {{ site.author.name }}. Powered by <a href="https://jekyllrb.com/">Jekyll</a>.</p>
+      <p>Theme by <a href="https://github.com/tw93">Tw93</a></p>
+    </div>
+  </footer>
+</body>
+</html>

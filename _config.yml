@@ -1,0 +1,115 @@
+# Site Information
+title: Boss's Blog
+description: "一个工程师的思考与记录"
+url: https://huang5556019.github.io
+repo: huang5556019/huang5556019.github.io
+lang: zh-CN
+encoding: utf-8
+timezone: Asia/Shanghai
+
+# Author Information (for SEO and AI crawlers)
+author:
+  name: huang5556019
+  email: xthuang5556019@outlook.com
+  url: https://huang5556019.github.io
+  github: huang5556019
+
+# Social Media and External URLs
+github: huang5556019
+menu:
+  - title: "GitHub"
+    url: "https://github.com/huang5556019"
+  - title: "About"
+    url: "/about.html"
+
+# SEO and Analytics (留空表示不启用)
+google_analytics:
+
+# Build Settings
+paginate: 10
+post_ext: md
+page_ext: md
+post_layout: post
+page_layout: page
+titlecase: true
+future: true
+highlighter: rouge
+markdown: kramdown
+permalink: /:year-:month-:day/:title.html
+sass:
+  sass_dir: _sass
+  style: compressed
+
+webrick:
+  headers:
+    "Access-Control-Allow-Origin": "*"
+    "Access-Control-Allow-Methods": "GET, OPTIONS"
+    "Access-Control-Allow-Headers": "Content-Type, X-Requested-With"
+
+collections:
+  posts:
+    output: true
+    permalink: /:year-:month-:day/:title.html
+
+include: [".htaccess", "robots.txt"]
+exclude:
+  [
+    "Gemfile",
+    "Gemfile.lock",
+    "README.md",
+    "LICENSE",
+    "package.json",
+    "node_modules",
+    "migrate_posts.py",
+    "blog-migration-guide.md",
+  ]
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Sitemap Settings
+defaults:
+  - scope:
+      path: "images/**/*"
+    values:
+      sitemap: false
+  - scope:
+      path: "js/**/*"
+    values:
+      sitemap: false
+  - scope:
+      path: "css/**/*"
+    values:
+      sitemap: false
+  - scope:
+      path: "_sass/**/*"
+    values:
+      sitemap: false
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      sitemap:
+        priority: 0.8
+        changefreq: weekly
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      sitemap:
+        priority: 0.6
+        changefreq: monthly
+
+# Comment System (Giscus - 可选)
+# giscus:
+#   repo: huang5556019/huang5556019.github.io
+#   repo-id:  # 需要在 https://giscus.app 获取
+#   category: Announcements
+#   category-id: 
+#   mapping: pathname
+#   reactions-enabled: 1
+#   emit-metadata: 0
+#   theme: light

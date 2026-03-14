@@ -1,0 +1,13 @@
+{
+  "name": "boss-blog",
+  "version": "1.0.0",
+  "description": "Boss's Blog - powered by cosy-jekyll-theme",
+  "scripts": {
+    "dev": "bundle exec jekyll serve --watch",
+    "build": "bundle exec jekyll build",
+    "serve": "bundle exec jekyll serve"
+  },
+  "keywords": ["jekyll", "blog", "github-pages"],
+  "author": "huang5556019",
+  "license": "MIT"
+}
