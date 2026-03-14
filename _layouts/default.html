@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!DOCTYPE html>
 <html lang="{{ site.lang }}">
 <head>
@@ -7,9 +10,15 @@
   <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-  {% seo %}
 </head>
 <body>
   {{ content }}
+  
+  <footer>
+    <div class="footer-content">
+      <p>© {{ site.time | date: '%Y' }} {{ site.author.name }}. Powered by <a href="https://jekyllrb.com/">Jekyll</a>.</p>
+      <p>Theme by <a href="https://github.com/tw93">Tw93</a></p>
+    </div>
+  </footer>
 </body>
 </html>

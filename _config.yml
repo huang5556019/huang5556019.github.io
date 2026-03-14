@@ -27,6 +27,7 @@ google_analytics:
 
 # Build Settings
 paginate: 10
+paginate_path: "/page:num/"
 post_ext: md
 page_ext: md
 post_layout: post
